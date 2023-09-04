@@ -1,0 +1,374 @@
+body {
+  background-attachment: fixed;
+  background-image: linear-gradient(180deg, #305baa 0%, #4c6fac77 75%);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  padding: 15px 10px 1px 5px;
+}
+
+button:focus {
+  outline: none;
+}
+
+ul {
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 200;
+  line-height: 19px;
+  list-style: none;
+  text-align: right;
+  position: relative;
+  bottom: 125px;
+  right: 32px;
+}
+
+.container {
+  box-shadow: 5px 10px 10px 5px rgba(15, 15, 15);
+  max-height: 670px;
+  max-width: 490px;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.weather-app {
+  font-size: 10px;
+  margin: 10px auto;
+}
+
+.top-city-buttons {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  padding: 12px 0px 9px 30px;
+}
+
+.top-city-buttons button {
+  padding-left: 21px;
+}
+
+.search-city-form {
+  padding: 8px 30px;
+}
+
+.form-control {
+  border-radius: 0;
+  border: 1px solid white;
+  box-shadow: 3px 3px 3px 2px rgba(34, 34, 34, 0.418);
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 25px;
+  width: 120%;
+  margin-left: 5px;
+}
+
+.search-city-button {
+  border-radius: 0px;
+  line-height: 25px;
+  position: relative;
+  left: 5px;
+}
+
+.geolocation-button {
+  border-radius: 0px;
+  line-height: 25px;
+  position: relative;
+  left: 10px;
+}
+
+.search-city-button,
+.geolocation-button {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+  padding: 5px 10px;
+}
+
+.search-city-button:hover,
+.geolocation-button:hover {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+  transition: all 200ms ease-in-out;
+}
+
+.temperature-units {
+  color: white;
+  font-size: 16px;
+  font-weight: 100;
+  text-align: right;
+  position: relative;
+  bottom: 0px;
+  right: 35px;
+}
+
+#celsius-link,
+#fahrenheit-link {
+  color: white;
+  font-weight: 200;
+  text-decoration: none;
+}
+
+#celsius-link:hover,
+#fahrenheit-link:hover {
+  font-weight: 400;
+}
+
+.current-date-and-time {
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 200;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.city-and-country {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 23px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.current-weather-description {
+  color: #3ab5ca;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  margin: 17px 0px 10px;
+  text-align: center;
+}
+
+.current-weather-description:first-letter {
+  text-transform: capitalize;
+}
+
+.current-weather-icon {
+  position: relative;
+  top: 10px;
+  left: 47px;
+}
+
+.current-temperature {
+  color: white;
+  display: block;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  margin-top: 18px;
+  text-align: center;
+  position: relative;
+  bottom: 72px;
+}
+
+.max-and-min-temperatures {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-size: 13px;
+  font-weight: 200;
+  margin: 20px 0px -105px 0px;
+  text-align: center;
+  position: relative;
+  bottom: 130px;
+}
+
+#real-feel,
+#humidity,
+#wind,
+#maximum-temperature,
+#minimum-temperature {
+  color: white;
+  font-weight: 400;
+}
+
+.hourly-forecast-header,
+.daily-forecast-header {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  position: relative;
+  bottom: 4px;
+  left: 35px;
+  text-transform: uppercase;
+}
+
+.hourly-forecast-header {
+  margin-top: 11px;
+}
+
+.daily-forecast-header {
+  margin-top: -8px;
+}
+
+.hr-1,
+.hr-2 {
+  color: white;
+  margin: -3px 33px 25px 33px;
+  max-width: 600px;
+}
+
+.hourly-forecast,
+.daily-forecast {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 32px;
+  margin: -58px 0 0px 0px;
+  text-align: center;
+}
+
+.hourly-forecast {
+  padding: 40px 12px 37px;
+}
+
+.daily-forecast {
+  padding: 40px 5px;
+}
+
+#day-temperature-forecast,
+#hour-temperature-forecast {
+  font-weight: 400;
+}
+
+footer {
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  margin-top: 3px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.coder-link,
+.github-link {
+  text-decoration: none;
+  color: black;
+}
+
+.coder-link:hover,
+.github-link:hover {
+  color: black;
+}
+
+@media (max-width: 800px) {
+  footer {
+    margin-top: 22px;
+  }
+
+  ul {
+    font-size: 11px;
+    position: relative;
+    right: 15px;
+  }
+
+  .weather-app {
+    margin: 20px 15px auto;
+  }
+
+  .container {
+    padding: 0px;
+  }
+
+  .top-city-buttons {
+    font-size: 14px;
+    padding: 12px 15px 9px 30px;
+  }
+
+  .top-city-buttons button {
+    padding-left: 8px;
+  }
+
+  .form-control {
+    line-height: 25px;
+    width: 115%;
+    margin-left: -2px;
+  }
+
+  #search-city-input {
+    font-size: 13px;
+  }
+
+  .search-city-button {
+    position: relative;
+    left: -18px;
+  }
+
+  .geolocation-button {
+    position: relative;
+    left: -5px;
+  }
+
+  .temperature-units {
+    font-size: 15px;
+    position: relative;
+    left: -20px;
+  }
+
+  .current-date-and-time {
+    font-size: 13px;
+  }
+
+  .city-and-country {
+    font-size: 20px;
+  }
+
+  .current-weather-description {
+    font-size: 15px;
+  }
+
+  .current-weather-icon {
+    position: relative;
+    left: 35px;
+  }
+
+  .max-and-min-temperatures {
+    font-size: 12px;
+    margin-top: 25px;
+  }
+
+  .hourly-forecast-header,
+  .daily-forecast-header {
+    font-size: 12px;
+    position: relative;
+    left: 20px;
+  }
+
+  .hourly-forecast-header {
+    padding-top: 5px;
+  }
+
+  .hr-1,
+  .hr-2 {
+    color: white;
+    margin: -3px 20px 25px 20px;
+    max-width: 600px;
+  }
+
+  .hourly-forecast,
+  .daily-forecast {
+    font-size: 12px;
+    line-height: 25px;
+    margin: -52px 0px 0px;
+    padding: 40px 0px 40px;
+  }
+}
+/* Light theme */
+.light-theme {
+  background-color: #163d80;
+  background-image: linear-gradient(315deg, #09214f 0%, #385fa477 74%);
+  color: #fff;
+}
+
+/* Dark theme */
+.dark-theme {
+  background-color: #222;
+  color: #fff;
+}
