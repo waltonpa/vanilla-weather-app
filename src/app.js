@@ -1,29 +1,8 @@
-// OPEN WEATHER API ///
-
-// Details for Open Weather Map API
 const apiKey = "1fa9ff4126d95b8db54f3897a208e91c";
 const apiUrlCurrentWeather = "https://api.openweathermap.org/data/2.5/weather?";
 const apiUrlForecast = "https://api.openweathermap.org/data/2.5/forecast?";
-const units = "imperial"; // Change units to "imperial" for Fahrenheit
+const units = "metric";
 
-// Function to change background color based on time of day
-function changeBackgroundColor() {
-  const currentTime = new Date().getHours();
-  const body = document.body;
-
-  if (currentTime < 20) {
-    // Before 8pm
-    body.style.backgroundColor = "yellow";
-  } else {
-    // After 8pm
-    body.style.backgroundColor = "gray";
-  }
-}
-
-// Call the function to change background color
-changeBackgroundColor();
-
-// API call using user input
 function searchCity(city) {
   let apiCurrentWeatherSearchString = `${apiUrlCurrentWeather}q=${city}&appid=${apiKey}&units=${units}`;
   axios.get(apiCurrentWeatherSearchString).then(displayCurrentWeather);
@@ -51,10 +30,6 @@ searchCityForm.addEventListener("submit", handleSubmit);
 let searchCityButton = document.querySelector("#search-city-button");
 searchCityButton.addEventListener("click", handleSubmit);
 
-/// GEOLOCATION ///
-
-// Get current location and API call using Geolocation
-
 function searchLocation(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
@@ -69,7 +44,7 @@ function searchLocation(position) {
   fahrenheitLink.addEventListener("click", convertToFahrenheit);
 
   celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
+  fahrenheitlink.classList.remove("active");
 }
 
 function getGeolocation(event) {
@@ -80,9 +55,6 @@ function getGeolocation(event) {
 let geolocationButton = document.querySelector("#geolocation-button");
 geolocationButton.addEventListener("click", getGeolocation);
 
-/// TOP CITIES ///
-
-// New York
 function searchNewYork(event) {
   event.preventDefault();
   searchCity("New York");
@@ -92,7 +64,6 @@ function searchNewYork(event) {
 let newYorkButton = document.querySelector("#new-york-button");
 newYorkButton.addEventListener("click", searchNewYork);
 
-// Los Angeles
 function searchLosAngeles(event) {
   event.preventDefault();
   searchCity("Los Angeles");
@@ -102,7 +73,6 @@ function searchLosAngeles(event) {
 let losAngelesButton = document.querySelector("#los-angeles-button");
 losAngelesButton.addEventListener("click", searchLosAngeles);
 
-// Chicago
 function searchChicago(event) {
   event.preventDefault();
   searchCity("Chicago");
@@ -112,7 +82,6 @@ function searchChicago(event) {
 let chicagoButton = document.querySelector("#chicago-button");
 chicagoButton.addEventListener("click", searchChicago);
 
-// Austin
 function searchAustin(event) {
   event.preventDefault();
   searchCity("Austin");
@@ -122,9 +91,6 @@ function searchAustin(event) {
 let austinButton = document.querySelector("#austin-button");
 austinButton.addEventListener("click", searchAustin);
 
-////////////////////////////////////////////////////////////////////////////////
-
-// Format date and timezone
 function formatDate(date, timezone) {
   let localOffsetInMs = date.getTimezoneOffset() * 60 * 1000;
   let targetOffsetInMs = timezone * 1000;
@@ -220,9 +186,24 @@ function getIcon(icon) {
   return iconElement;
 }
 
-// Display city, country and current weather (input or geolocation)
+// Function to change background color based on time of day
+function changeBackgroundColor() {
+  const currentTime = new Date().getHours();
+  const body = document.body;
+
+  if (currentTime < 20) {
+    // Before 8pm
+    body.style.backgroundColor = "yellow";
+  } else {
+    // After 8pm
+    body.style.backgroundColor = "gray";
+  }
+}
+
+// Call the function to change background color
+changeBackgroundColor();
+
 function displayCurrentWeather(response) {
-  // City, country, local time
   document.querySelector("#city-and-country").innerHTML =
     response.data.name + ", " + response.data.sys.country;
   document.querySelector("#current-date-and-time").innerHTML = formatDate(
@@ -230,7 +211,6 @@ function displayCurrentWeather(response) {
     response.data.timezone
   );
 
-  // Current weather icon, description and current temperature (including maximum and minimum temperatures)
   document
     .querySelector("#current-weather-icon")
     .setAttribute("src", getIcon(response.data.weather[0].icon));
@@ -250,7 +230,6 @@ function displayCurrentWeather(response) {
   celsiusMaxTemperature = response.data.main.temp_max;
   celsiusMinTemperature = response.data.main.temp_min;
 
-  // Additional weather details
   document.querySelector("#real-feel").innerHTML =
     " " + Math.round(response.data.main.feels_like) + "°";
   celsiusTemperatureFeelsLike = response.data.main.feels_like;
@@ -263,9 +242,11 @@ function displayCurrentWeather(response) {
   let longitude = response.data.coord.lon;
   let latitude = response.data.coord.lat;
   fetchDailyForecast(latitude, longitude);
+
+  let currentTime = new Date();
+  updateBackgroundColor(currentTime);
 }
 
-// Display 3 Hour Weather Forecast
 function formatHours(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
@@ -301,7 +282,6 @@ function displayHourlyForecast(response) {
   }
 }
 
-// Display 5 Day Outlook
 function getNameOfWeekDay(timestamp) {
   let date = new Date(timestamp);
   let weekDays = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -337,9 +317,6 @@ function displayDailyForecast(response) {
   }
 }
 
-/// CELSIUS AND FAHRENHEIT ///
-
-// Convert to Celsius
 function convertToCelsius(event) {
   event.preventDefault();
 
@@ -367,7 +344,6 @@ let celsiusTemperatureFeelsLike = null;
 let celsiusMinTemperature = null;
 let celsiusMaxTemperature = null;
 
-// Convert to Fahrenheit
 function convertToFahrenheit(event) {
   event.preventDefault();
 
@@ -442,28 +418,4 @@ function convertDailyForecast(unit) {
   }
 }
 
-// Default city //
 searchCity("Savannah");
-
-const container = document.getElementById("container");
-
-function setTheme() {
-  const currentTime = new Date();
-  const currentHour = currentTime.getHours();
-
-  if (currentHour >= 20 || currentHour < 8) {
-    // After 8 PM or before 8 AM (dark theme)
-    container.classList.remove("light-theme");
-    container.classList.add("dark-theme");
-  } else {
-    // Between 8 AM and 8 PM (light theme)
-    container.classList.remove("dark-theme");
-    container.classList.add("light-theme");
-  }
-}
-
-// Initially set the theme based on the current time
-setTheme();
-
-// Update the theme every minute
-setInterval(setTheme, 60000);
