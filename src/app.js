@@ -1,50 +1,50 @@
 const apiKey = "1fa9ff4126d95b8db54f3897a208e91c";
 const apiUrlCurrentWeather = "https://api.openweathermap.org/data/2.5/weather?";
 const apiUrlForecast = "https://api.openweathermap.org/data/2.5/forecast?";
-const units = "metric";
+const units = "imperial"; // Use imperial units for Fahrenheit
 
 function searchCity(city) {
-  let apiCurrentWeatherSearchString = `${apiUrlCurrentWeather}q=${city}&appid=${apiKey}&units=${units}`;
-  axios.get(apiCurrentWeatherSearchString).then(displayCurrentWeather);
+  const apiCurrentWeatherSearchString = `${apiUrlCurrentWeather}q=${city}&appid=${apiKey}&units=${units}`;
+  axios
+    .get(apiCurrentWeatherSearchString)
+    .then((response) => {
+      displayCurrentWeather(response);
+      return `${city}, ${response.data.sys.country}`;
+    })
+    .then((cityCountry) => {
+      document.querySelector("#city-and-country").innerHTML = cityCountry;
+    });
 
-  let apiHourlySearchString = `${apiUrlForecast}q=${city}&appid=${apiKey}&units=${units}`;
+  const apiHourlySearchString = `${apiUrlForecast}q=${city}&appid=${apiKey}&units=${units}`;
   axios.get(apiHourlySearchString).then(displayHourlyForecast);
-
-  celsiusLink.removeEventListener("click", convertToCelsius);
-  fahrenheitLink.addEventListener("click", convertToFahrenheit);
-
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
 }
 
 function handleSubmit(event) {
   event.preventDefault();
-  let cityInput = document.querySelector("#search-city-input");
+  const cityInput = document.querySelector("#search-city-input");
   searchCity(cityInput.value);
-  console.log(searchCity.value);
 }
 
-let searchCityForm = document.querySelector("#search-city-form");
+const searchCityForm = document.querySelector("#search-city-form");
 searchCityForm.addEventListener("submit", handleSubmit);
 
-let searchCityButton = document.querySelector("#search-city-button");
+const searchCityButton = document.querySelector("#search-city-button");
 searchCityButton.addEventListener("click", handleSubmit);
 
 function searchLocation(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
 
-  let apiSearchString = `${apiUrlCurrentWeather}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-  axios.get(apiSearchString).then(displayCurrentWeather);
-
-  let apiForecastSearchString = `${apiUrlForecast}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-  axios.get(apiForecastSearchString).then(displayHourlyForecast);
-
-  celsiusLink.removeEventListener("click", convertToCelsius);
-  fahrenheitLink.addEventListener("click", convertToFahrenheit);
-
-  celsiusLink.classList.add("active");
-  fahrenheitlink.classList.remove("active");
+  const apiSearchString = `${apiUrlCurrentWeather}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+  axios
+    .get(apiSearchString)
+    .then((response) => {
+      displayCurrentWeather(response);
+      return `${response.data.name}, ${response.data.sys.country}`;
+    })
+    .then((cityCountry) => {
+      document.querySelector("#city-and-country").innerHTML = cityCountry;
+    });
 }
 
 function getGeolocation(event) {
@@ -52,53 +52,53 @@ function getGeolocation(event) {
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
 
-let geolocationButton = document.querySelector("#geolocation-button");
+const geolocationButton = document.querySelector("#geolocation-button");
 geolocationButton.addEventListener("click", getGeolocation);
 
 function searchNewYork(event) {
   event.preventDefault();
   searchCity("New York");
-  let cityCountryElement = document.querySelector("#city-and-country");
-  cityCountryElement.innerHTML = "New York";
+  document.querySelector("#city-and-country").innerHTML = "New York";
 }
-let newYorkButton = document.querySelector("#new-york-button");
+
+const newYorkButton = document.querySelector("#new-york-button");
 newYorkButton.addEventListener("click", searchNewYork);
 
 function searchLosAngeles(event) {
   event.preventDefault();
   searchCity("Los Angeles");
-  let cityCountryElement = document.querySelector("#city-and-country");
-  cityCountryElement.innerHTML = "Los Angeles";
+  document.querySelector("#city-and-country").innerHTML = "Los Angeles";
 }
-let losAngelesButton = document.querySelector("#los-angeles-button");
+
+const losAngelesButton = document.querySelector("#los-angeles-button");
 losAngelesButton.addEventListener("click", searchLosAngeles);
 
 function searchChicago(event) {
   event.preventDefault();
   searchCity("Chicago");
-  let cityCountryElement = document.querySelector("#city-and-country");
-  cityCountryElement.innerHTML = "Chicago";
+  document.querySelector("#city-and-country").innerHTML = "Chicago";
 }
-let chicagoButton = document.querySelector("#chicago-button");
+
+const chicagoButton = document.querySelector("#chicago-button");
 chicagoButton.addEventListener("click", searchChicago);
 
 function searchAustin(event) {
   event.preventDefault();
   searchCity("Austin");
-  let cityCountryElement = document.querySelector("#city-and-country");
-  cityCountryElement.innerHTML = "Austin";
+  document.querySelector("#city-and-country").innerHTML = "Austin";
 }
-let austinButton = document.querySelector("#austin-button");
+
+const austinButton = document.querySelector("#austin-button");
 austinButton.addEventListener("click", searchAustin);
 
 function formatDate(date, timezone) {
-  let localOffsetInMs = date.getTimezoneOffset() * 60 * 1000;
-  let targetOffsetInMs = timezone * 1000;
-  let targetTimestamp = date.getTime() + localOffsetInMs + targetOffsetInMs;
+  const localOffsetInMs = date.getTimezoneOffset() * 60 * 1000;
+  const targetOffsetInMs = timezone * 1000;
+  const targetTimestamp = date.getTime() + localOffsetInMs + targetOffsetInMs;
 
-  let now = new Date(targetTimestamp);
+  const now = new Date(targetTimestamp);
 
-  let days = [
+  const days = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -107,8 +107,8 @@ function formatDate(date, timezone) {
     "Friday",
     "Saturday",
   ];
-  let day = days[now.getDay()];
-  let months = [
+  const day = days[now.getDay()];
+  const months = [
     "January",
     "February",
     "March",
@@ -122,26 +122,20 @@ function formatDate(date, timezone) {
     "November",
     "December",
   ];
-  let month = months[now.getMonth()];
-  let dayIndex = now.getDate();
-  let year = now.getFullYear();
+  const month = months[now.getMonth()];
+  const dayIndex = now.getDate();
+  const year = now.getFullYear();
 
-  let hours = now.getHours();
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  let minutes = now.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
 
-  let currentTime = `${hours}:${minutes}`;
-  let dateTimeElement = document.querySelector("#current-date-and-time");
+  const currentTime = `${(hours % 12).toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")} ${hours >= 12 ? "PM" : "AM"}`;
+  const dateTimeElement = document.querySelector("#current-date-and-time");
   dateTimeElement.innerHTML = `${day}, ${dayIndex} ${month} ${year} &nbsp;|&nbsp; Local time: ${currentTime}`;
 
-  let formattedDate = `${day}, ${dayIndex} ${month} ${year} &nbsp;|&nbsp; Local time: ${currentTime}`;
-
-  return formattedDate;
+  return `${day}, ${dayIndex} ${month} ${year} &nbsp;|&nbsp; Local time: ${currentTime}`;
 }
 
 function getIcon(icon) {
@@ -218,37 +212,32 @@ function displayCurrentWeather(response) {
   document.querySelector("#current-weather-description").innerHTML =
     response.data.weather[0].description;
 
-  celsiusTemperature = response.data.main.temp;
-  document.querySelector("#current-temperature").innerHTML = `${
-    Math.round(celsiusTemperature) + "°"
-  }`;
+  const fahrenheitTemperature = response.data.main.temp;
+  document.querySelector("#current-temperature").innerHTML =
+    Math.round(fahrenheitTemperature) + "°";
 
   document.querySelector("#maximum-temperature").innerHTML =
     " " + Math.round(response.data.main.temp_max) + "°";
   document.querySelector("#minimum-temperature").innerHTML =
     " " + Math.round(response.data.main.temp_min) + "°";
-  celsiusMaxTemperature = response.data.main.temp_max;
-  celsiusMinTemperature = response.data.main.temp_min;
 
   document.querySelector("#real-feel").innerHTML =
     " " + Math.round(response.data.main.feels_like) + "°";
-  celsiusTemperatureFeelsLike = response.data.main.feels_like;
-
   document.querySelector("#humidity").innerHTML =
     " " + response.data.main.humidity + "%";
   document.querySelector("#wind").innerHTML =
-    " " + Math.round(response.data.wind.speed) + " km/h";
+    " " + Math.round(response.data.wind.speed) + " mph";
 
-  let longitude = response.data.coord.lon;
-  let latitude = response.data.coord.lat;
+  const longitude = response.data.coord.lon;
+  const latitude = response.data.coord.lat;
   fetchDailyForecast(latitude, longitude);
 
-  let currentTime = new Date();
+  const currentTime = new Date();
   updateBackgroundColor(currentTime);
 }
 
 function formatHours(timestamp) {
-  let date = new Date(timestamp);
+  const date = new Date(timestamp);
   let hours = date.getHours();
   if (hours < 10) {
     hours = `0${hours}`;
@@ -257,17 +246,19 @@ function formatHours(timestamp) {
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
-  return `${hours}:${minutes}`;
+  return `${(hours % 12).toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")} ${hours >= 12 ? "PM" : "AM"}`;
 }
 
 function displayHourlyForecast(response) {
-  let hourlyForecastElement = document.querySelector("#hourly-forecast");
+  const hourlyForecastElement = document.querySelector("#hourly-forecast");
   hourlyForecastElement.innerHTML = null;
   let hourlyForecast = null;
 
   for (let index = 0; index < 5; index++) {
     hourlyForecast = response.data.list[index];
-    let localTimestamp = hourlyForecast.dt + response.data.city.timezone;
+    const localTimestamp = hourlyForecast.dt + response.data.city.timezone;
 
     hourlyForecastElement.innerHTML += `
     <div class="col hour-box">
@@ -283,19 +274,19 @@ function displayHourlyForecast(response) {
 }
 
 function getNameOfWeekDay(timestamp) {
-  let date = new Date(timestamp);
-  let weekDays = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-  let weekDay = weekDays[date.getDay()];
+  const date = new Date(timestamp);
+  const weekDays = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  const weekDay = weekDays[date.getDay()];
   return `${weekDay}`;
 }
 
 function fetchDailyForecast(latitude, longitude) {
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=${units}`;
+  const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayDailyForecast);
 }
 
 function displayDailyForecast(response) {
-  let dailyForecastElement = document.querySelector("#daily-forecast");
+  const dailyForecastElement = document.querySelector("#daily-forecast");
   dailyForecastElement.innerHTML = null;
   let dailyForecast = null;
 
@@ -314,107 +305,6 @@ function displayDailyForecast(response) {
    ${Math.round(dailyForecast.temp.day)}°
     </div>
     </div>`;
-  }
-}
-
-function convertToCelsius(event) {
-  event.preventDefault();
-
-  document.querySelector("#current-temperature").innerHTML =
-    Math.round(celsiusTemperature) + "°";
-  document.querySelector("#real-feel").innerHTML =
-    Math.round(celsiusTemperatureFeelsLike) + "°";
-  document.querySelector("#minimum-temperature").innerHTML =
-    Math.round(celsiusMinTemperature) + "°";
-  document.querySelector("#maximum-temperature").innerHTML =
-    Math.round(celsiusMaxTemperature) + "°";
-
-  convertHourlyForecast("celsius");
-  convertDailyForecast("celsius");
-
-  celsiusLink.removeEventListener("click", convertToCelsius);
-  fahrenheitLink.addEventListener("click", convertToFahrenheit);
-}
-
-let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", convertToCelsius);
-
-let celsiusTemperature = null;
-let celsiusTemperatureFeelsLike = null;
-let celsiusMinTemperature = null;
-let celsiusMaxTemperature = null;
-
-function convertToFahrenheit(event) {
-  event.preventDefault();
-
-  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
-  let temperatureElement = document.querySelector("#current-temperature");
-  temperatureElement.innerHTML = Math.round(fahrenheitTemperature) + "°";
-
-  let fahrenheitTemperatureFeelsLike =
-    (celsiusTemperatureFeelsLike * 9) / 5 + 32;
-  document.querySelector("#real-feel").innerHTML =
-    Math.round(fahrenheitTemperatureFeelsLike) + "°";
-
-  let fahrenheitMinTemperature = (celsiusMinTemperature * 9) / 5 + 32;
-  document.querySelector("#minimum-temperature").innerHTML =
-    Math.round(fahrenheitMinTemperature) + "°";
-
-  let fahrenheitMaxTemperature = (celsiusMaxTemperature * 9) / 5 + 32;
-  document.querySelector("#maximum-temperature").innerHTML =
-    Math.round(fahrenheitMaxTemperature) + "°";
-
-  convertHourlyForecast("fahrenheit");
-  convertDailyForecast("fahrenheit");
-
-  celsiusLink.addEventListener("click", convertToCelsius);
-  fahrenheitLink.removeEventListener("click", convertToFahrenheit);
-}
-
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", convertToFahrenheit);
-
-function convertHourlyForecast(unit) {
-  if (unit === "celsius") {
-    document
-      .querySelectorAll("#hour-temperature-forecast")
-      .forEach(function (temperature) {
-        let currentTemperature = temperature.innerHTML.replace("°", "");
-        temperature.innerHTML = `${Math.round(
-          ((currentTemperature - 32) * 5) / 9
-        )}°`;
-      });
-  } else {
-    document
-      .querySelectorAll("#hour-temperature-forecast")
-      .forEach(function (temperature) {
-        let currentTemperature = temperature.innerHTML.replace("°", "");
-        temperature.innerHTML = `${Math.round(
-          (currentTemperature * 9) / 5 + 32
-        )}°`;
-      });
-  }
-}
-
-function convertDailyForecast(unit) {
-  if (unit === "celsius") {
-    document
-      .querySelectorAll("#day-temperature-forecast")
-      .forEach(function (temperature) {
-        let currentTemperature = temperature.innerHTML.replace("°", "");
-        temperature.innerHTML = `${Math.round(
-          ((currentTemperature - 32) * 5) / 9
-        )}°`;
-      });
-  } else {
-    document
-      .querySelectorAll("#day-temperature-forecast")
-      .forEach(function (temperature) {
-        let currentTemperature = temperature.innerHTML.replace("°", "");
-        temperature.innerHTML = `${Math.round(
-          (currentTemperature * 9) / 5 + 32
-        )}°`;
-      });
   }
 }
 
